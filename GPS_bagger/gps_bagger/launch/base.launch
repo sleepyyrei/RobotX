@@ -1,0 +1,10 @@
+<launch>
+    <!-- Launch GPS Node -->
+    <node pkg="gps_bagger" type="gps_node.py" name="gps_node" output="screen"/>
+
+    <!-- Launch Propagation Communication Node -->
+    <node pkg="gps_bagger" type="prop_comm.py" name="prop_comm" output="screen"/>
+
+    <!-- Launch Bagger Node -->
+    <node pkg="gps_bagger" type="bagger.py" name="bagger" output="screen"/>
+</launch>
