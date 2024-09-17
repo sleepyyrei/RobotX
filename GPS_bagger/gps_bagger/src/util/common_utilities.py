@@ -3,7 +3,8 @@
 import math
 import numpy
 import pymap3d
-from tf.transformations import euler_from_quaternion, quaternion_from_euler
+from transforms3d.euler import quat2euler, euler2quat
+
 
 ################################################################################
 
@@ -110,7 +111,7 @@ def quaternion_to_euler(quat):
     :return euler: roll=euler[0], pitch=euler[1], yaw=euler[2]
     '''
     q = [quat.x, quat.y, quat.z, quat.w]
-    euler = euler_from_quaternion(q)
+    euler = euler2quat(q)
     return euler
 
 def euler_to_quaternion(roll, pitch, yaw):
@@ -123,7 +124,7 @@ def euler_to_quaternion(roll, pitch, yaw):
 
     :return quat: x=quat[0], y=quat[1], z=quat[2], w=quat[3]
     '''
-    quat = quaternion_from_euler(roll, pitch, yaw)
+    quat = quat2euler(roll, pitch, yaw)
     return quat
 
 def gps_to_enu(lat, lon, alt, baseLat, baseLon):
@@ -221,5 +222,34 @@ def local_to_global_tf(x_ref, y_ref, theta_ref, x_loc, y_loc, theta_loc):
     tgt_obj_glb_tf = numpy.matmul(ref_obj_glb_tf, tgt_obj_loc_tf)
     x_global, y_global, theta_global = tgt_obj_glb_tf[0][0], tgt_obj_glb_tf[1][0], normalize_angle(theta_ref + theta_loc)
     return x_global, y_global, theta_global
+
+import math
+
+def convert_cartesian(x, y, T_x, T_y, theta):
+    """
+    Convert coordinates from one Cartesian reference frame to another.
+    
+    Args:
+        x, y: Coordinates in the original reference frame.
+        T_x, T_y: Translation (displacement of origin of the new frame).
+        theta: Rotation angle (in degrees) between the two frames.
+        
+    Returns:
+        x', y': Coordinates in the new reference frame.
+    """
+    # Convert the rotation angle from degrees to radians
+    theta_rad = math.radians(theta)
+    
+    # Step 1: Translate the point
+    x_translated = x - T_x
+    y_translated = y - T_y
+    
+    # Step 2: Rotate the translated point
+    x_new = x_translated * math.cos(theta_rad) + y_translated * math.sin(theta_rad)
+    y_new = y_translated * math.cos(theta_rad) - x_translated * math.sin(theta_rad)
+    
+    return x_new, y_new
+
+
 
 ################################################################################
