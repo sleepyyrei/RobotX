@@ -1,115 +1,90 @@
-#!/usr/bin/env python3
-
 import rospy
-from sensor_msgs.msg import NavSatFix
-from std_msgs.msg import Float32
-from util.parser import parse_gpgga
-import serial
-import time
+from mavros_msgs.msg import GlobalPositionTarget
+from gps_common.msg import GPSFix
+from util.maps import Pose
+from math import radians, cos, sin, sqrt, atan2
+from typing import List
 
-def parse_gga_sentence(sentence):
-    """Parse a $GNGGA sentence and return latitude, longitude, and altitude."""
-    parts = sentence.split(',')
-    try:
-        lat = float(parts[2])  # Latitude in ddmm.mmmm
-        lon = float(parts[4])  # Longitude in dddmm.mmmm
-        alt = float(parts[9])  # Altitude in meters
+class WaypointNavigator:
+    def __init__(self, waypoints: List['Pose']):
+        self.waypoints = waypoints  # List of poses (waypoints)
+        self.current_goal_index = 0
+        self.current_pose = None  # Store the current GPS location
+        self.distance_threshold = 1.0  # 1 meter threshold
+        
+        # Set up publisher for waypoints and subscriber for current GPS position
+        self.waypoint_pub = rospy.Publisher('/mavros/setpoint_raw/global', GlobalPositionTarget, queue_size=10)
+        rospy.Subscriber('/gps/gps_fix', GPSFix, self.gps_callback)
 
-        # Convert latitude and longitude to decimal degrees
-        lat_deg = int(lat / 100)
-        lat_min = lat % 100
-        latitude = lat_deg + (lat_min / 60.0)
+    def gps_callback(self, gps_data: GPSFix):
+        """Callback function to get the current GPS position from the /gps/gps_fix topic."""
+        self.current_pose = gps_data
+        self.check_distance_to_goal()
 
-        lon_deg = int(lon / 100)
-        lon_min = lon % 100
-        longitude = lon_deg + (lon_min / 60.0)
+    def check_distance_to_goal(self):
+        """Check the distance between the current GPS position and the goal pose."""
+        if self.current_pose is None or self.current_goal_index >= len(self.waypoints):
+            return
+        
+        current_goal = self.waypoints[self.current_goal_index]
+        
+        if not current_goal.hasGPSCoords():
+            rospy.logwarn("Goal pose does not have valid GPS coordinates.")
+            return
 
-        return latitude, longitude, alt
-    except (IndexError, ValueError):
-        rospy.logwarn("Failed to parse GNGGA sentence")
-        return None, None, None
+        distance = self.haversine_distance(self.current_pose.latitude, self.current_pose.longitude,
+                                           current_goal.lat, current_goal.lon)
 
-def parse_hdt_sentence(sentence):
-    """Parse a $HDT sentence and return yaw information."""
-    parts = sentence.split(',')
-    try:
-        yaw = float(parts[1])  # Heading in degrees
-        return yaw
-    except (IndexError, ValueError):
-        rospy.logwarn("Failed to parse HDT sentence")
-        return None
-def gps_cmd_callback(data):
-        global gps_cmd
-        gps_cmd = data
+        rospy.loginfo(f"Distance to goal: {distance:.2f} meters")
 
-def read_gps_data():
-    # Replace '/dev/ttyUSB0' with your serial port
-    ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
-    rospy.loginfo("Connected to GPS")
+        if distance <= self.distance_threshold:
+            rospy.loginfo(f"Reached waypoint {self.current_goal_index}, sending next waypoint.")
+            self.send_next_waypoint()
 
-    while not rospy.is_shutdown():
-        if ser.in_waiting > 0:
-            line = ser.readline().decode('ascii', errors='replace').strip()
+    def send_next_waypoint(self):
+        """Send the next waypoint if available."""
+        if self.current_goal_index < len(self.waypoints):
+            goal_pose = self.waypoints[self.current_goal_index]
+            self.publish_waypoint(goal_pose)
+            self.current_goal_index += 1
+        else:
+            rospy.loginfo("All waypoints have been reached.")
 
-            if line.startswith('$GPGGA'):
-                lat, lon, alt = parse_gpgga(line)
-                if lat is not None and lon is not None:
-                    gps_data = (lat, lon, alt)
-                    if gps_data is not None:
-                        lat, lon, alt = gps_data
-                        gps_msg = NavSatFix()
-                        gps_msg.header.stamp = rospy.Time.now()
-                        gps_msg.header.frame_id = "gps"
-                        gps_msg.latitude = lat
-                        gps_msg.longitude = lon
-                        gps_msg.altitude = alt
+    def publish_waypoint(self, pose: 'Pose'):
+        """Publish the current goal pose as a waypoint."""
+        waypoint = GlobalPositionTarget()
+        
+        # Fill in the waypoint message with the GPS coordinates and heading from the Pose object
+        waypoint.latitude = pose.lat
+        waypoint.longitude = pose.lon
+        waypoint.altitude = 0  # Altitude can be customized
 
-                        rospy.loginfo("Publishing GPS data: %s", gps_msg)
-                        gps_pub.publish(gps_msg)
-                        gps_data = None  # Reset after publishing
+        # Set heading/yaw
+        waypoint.yaw = pose.heading if pose.heading is not None else 0.0
+        
+        # Type mask to ignore unused fields (velocity, yaw rate, etc.)
+        waypoint.coordinate_frame = GlobalPositionTarget.FRAME_GLOBAL_REL_ALT
+        waypoint.type_mask = (GlobalPositionTarget.IGNORE_VX |
+                              GlobalPositionTarget.IGNORE_VY |
+                              GlobalPositionTarget.IGNORE_VZ |
+                              GlobalPositionTarget.IGNORE_AFX |
+                              GlobalPositionTarget.IGNORE_AFY |
+                              GlobalPositionTarget.IGNORE_AFZ |
+                              GlobalPositionTarget.IGNORE_YAW_RATE)
+        
+        # Publish the waypoint
+        self.waypoint_pub.publish(waypoint)
+        rospy.loginfo(f"Published waypoint: Latitude: {pose.lat}, Longitude: {pose.lon}, Heading: {pose.heading}")
 
-            elif line.startswith('$HDT'):
-                yaw = parse_hdt_sentence(line)
-                if yaw is not None:
-                    rospy.loginfo("Yaw information: %f", yaw)
-                    yaw_pub.publish(yaw)
-                    yaw = None
+    @staticmethod
+    def haversine_distance(lat1, lon1, lat2, lon2):
+        """Calculate the great-circle distance between two points on the Earth."""
+        R = 6371e3  # Radius of Earth in meters
+        phi1, phi2 = radians(lat1), radians(lat2)
+        delta_phi = radians(lat2 - lat1)
+        delta_lambda = radians(lon2 - lon1)
 
-            elif line.lower() in ["next"]:
-                try:
-                    latitude = gps_cmd.latitude
-                    longitude = gps_cmd.longitude
-                    altitude = gps_cmd.altitude
+        a = sin(delta_phi / 2) ** 2 + cos(phi1) * cos(phi2) * sin(delta_lambda / 2) ** 2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
-                # Format the data as a string
-                    message = f"Latitude: {latitude}, Longitude: {longitude}, Altitude: {altitude}"
-                    ser.write((message + '\n').encode('ascii'))
-                    global gps_last_cmd 
-                    gps_last_cmd = gps_cmd
-                except:
-                    pass
-            elif line.lower() in ["repeat"]:
-                try:
-                    latitude = gps_last_cmd.latitude
-                    longitude = gps_last_cmd.longitude
-                    altitude = gps_last_cmd.altitude
-
-                # Format the data as a string
-                    message = f"Latitude: {latitude}, Longitude: {longitude}, Altitude: {altitude}"
-                    ser.write((message + '\n').encode('ascii'))
-                except:
-                    pass
-
-if __name__ == '__main__':
-    gps_data = None
-    gps_cmd = None
-    gps_last_cmd = None
-    rospy.init_node('gps_node', anonymous=True)
-    gps_pub = rospy.Publisher('/gps/gps_prop', NavSatFix, queue_size=10)
-    yaw_pub = rospy.Publisher('/gps/yaw', Float32, queue_size=10)
-    rospy.Subscriber('/gps/gps_cmd', NavSatFix, gps_cmd_callback) 
-
-    try:
-        read_gps_data()
-    except rospy.ROSInterruptException:
-        pass
+        return R * c  # Distance in meters
