@@ -1,0 +1,6 @@
+# Request: An array of Pose waypoints
+Pose[] waypoints
+
+---
+# Response: Boolean indicating success
+bool success
