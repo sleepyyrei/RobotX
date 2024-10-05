@@ -25,6 +25,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/package.xml"
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/bagger.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/diamond.py"
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/gps_mock.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/gps_node.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/prop_comm.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/scripts/prop_comm_tester.py"

@@ -24,7 +24,7 @@ add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
 add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" "sensor_msgs/NavSatFix:std_msgs/Header:sensor_msgs/NavSatStatus"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" "sensor_msgs/NavSatFix:sensor_msgs/NavSatStatus:std_msgs/Header"
 )
 
 #
@@ -44,7 +44,7 @@ _generate_srv_cpp(gps_bagger
 _generate_srv_cpp(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg"
+  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/gps_bagger
 )
 
@@ -85,7 +85,7 @@ _generate_srv_eus(gps_bagger
 _generate_srv_eus(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg"
+  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/gps_bagger
 )
 
@@ -126,7 +126,7 @@ _generate_srv_lisp(gps_bagger
 _generate_srv_lisp(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg"
+  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/gps_bagger
 )
 
@@ -167,7 +167,7 @@ _generate_srv_nodejs(gps_bagger
 _generate_srv_nodejs(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg"
+  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/gps_bagger
 )
 
@@ -208,7 +208,7 @@ _generate_srv_py(gps_bagger
 _generate_srv_py(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg"
+  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/gps_bagger
 )
 
