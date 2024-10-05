@@ -36,3 +36,22 @@ def parse_gpgga(gpgga_message):
     alt = float(parts[9])
 
     return lat, lon, alt
+
+def parse_hdt(hdt_message):
+    """
+    Parses an HDT message to extract heading information.
+
+    Parameters:
+    hdt_message (str): The HDT message string.
+
+    Returns:
+    float: The heading in degrees relative to true north.
+    """
+
+    # Split the HDT message by commas
+    parts = hdt_message.split(',')
+
+    # Extract the heading (true heading) which is typically in parts[1]
+    heading = float(parts[1])
+
+    return heading
