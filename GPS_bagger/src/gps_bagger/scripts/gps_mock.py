@@ -24,9 +24,9 @@ class MockGPS:
         gps_msg.longitude = self.fixed_longitude    # Set the fixed longitude
         gps_msg.altitude = self.fixed_altitude      # Set the fixed altitude
 
-        # Set status (indicating a valid GPS fix)
-        gps_msg.status.status = NavSatFix.STATUS_FIX
-        gps_msg.status.service = NavSatFix.SERVICE_GPS
+        # # Set status (indicating a valid GPS fix)
+        # gps_msg.status.status = NavSatFix.STATUS_FIX
+        # gps_msg.status.service = NavSatFix.SERVICE_GPS
         
         # Publish the message
         self.gps_pub.publish(gps_msg)
