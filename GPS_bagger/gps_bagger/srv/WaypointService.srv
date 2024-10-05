@@ -1,6 +1,4 @@
-# Request: An array of Pose waypoints
-Pose[] waypoints
-
+sensor_msgs/NavSatFix[] waypoints
+float64[] headings
 ---
-# Response: Boolean indicating success
 bool success
