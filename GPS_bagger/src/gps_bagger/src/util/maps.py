@@ -41,6 +41,8 @@ class Pose:
                         print(f"Warning: Heading does not match calculated heading. Input heading: {self.heading}, Calculated heading: {origin.heading - self.yaw}")
             elif self.heading is None:
                 self.heading = -round(self.yaw, 3)
+
+        # Calculate euclidean coordinates base on GPS coordinates
         if self.hasGPSCoords() and self.origin is not None:
             origin = cast(Pose, self.origin)
                 
@@ -65,14 +67,14 @@ class Pose:
                 if not self.check_tolerance(y_base, self.y, self.tolerance):
                     print(f"Warning: y coordinate does not match calculated y coordinate. Input y: {self.y}, Calculated y: {y_base}")
             else:
-                self.x = x_base
-                self.y = y_base
+                self.y = x_base
+                self.x = y_base
             
         elif self.x is not None and self.y is not None and self.origin is not None:
             origin = cast(Pose, self.origin)
             
             # Perform the coordinate transformation from origin to ENU
-            test_e, test_n = convert_cartesian(self.x, self.y, origin.x, origin.y, origin.heading)
+            test_e, test_n = convert_cartesian(self.y, self.x, origin.x, origin.y, origin.heading)
             
             # Transform coordinates from ENU to GPS
             if origin.lat is not None and origin.lon is not None and origin.heading is not None:
