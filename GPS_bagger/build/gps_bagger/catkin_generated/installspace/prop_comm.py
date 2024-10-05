@@ -25,9 +25,11 @@ class WaypointNavigator:
         """Handle the incoming waypoints from the service."""
         try:
             new_waypoints = []
+            i = 0
             for wp in req.waypoints:
                 # Create Pose objects from the incoming waypoints
-                new_waypoints.append(Pose(lat=wp.lat, lon=wp.lon, heading=wp.heading))
+                new_waypoints.append(Pose(lat=wp.latitude, lon=wp.longitude, heading=req.headings[i]))
+                i+=1
 
             # Update the waypoints
             self.waypoints = new_waypoints
@@ -111,3 +113,20 @@ class WaypointNavigator:
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
         return R * c  # Distance in meters
+def main():
+    rospy.init_node('waypoint_navigator_node', anonymous=True)  # Initialize the ROS node
+    navigator = WaypointNavigator()  # Create an instance of the WaypointNavigator class
+
+    rospy.loginfo("Waypoint Navigator Node is running...")
+    
+    # Keep the node running until it is shut down
+    try:
+        rospy.spin()  # Keep the node alive, processing callbacks
+    except KeyboardInterrupt:
+        rospy.loginfo("Waypoint Navigator Node shutting down.")
+    finally:
+        # Any necessary cleanup can go here
+        rospy.loginfo("Cleanup complete.")
+
+if __name__ == '__main__':
+    main()  # Run the main function when the script is executed

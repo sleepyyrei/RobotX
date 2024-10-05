@@ -53,6 +53,10 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/prop_comm_tester.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/diamond.py")
 endif()
 
