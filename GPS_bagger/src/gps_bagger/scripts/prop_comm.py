@@ -25,9 +25,11 @@ class WaypointNavigator:
         """Handle the incoming waypoints from the service."""
         try:
             new_waypoints = []
+            i = 0
             for wp in req.waypoints:
                 # Create Pose objects from the incoming waypoints
-                new_waypoints.append(Pose(lat=wp.lat, lon=wp.lon, heading=wp.heading))
+                new_waypoints.append(Pose(lat=wp.latitude, lon=wp.longitude, heading=req.headings[i]))
+                i+=1
 
             # Update the waypoints
             self.waypoints = new_waypoints
