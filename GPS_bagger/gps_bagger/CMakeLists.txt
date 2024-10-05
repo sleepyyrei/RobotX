@@ -5,12 +5,16 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  mavros_msgs
   tf
+  message_generation
 )
+
 
 add_service_files(
   FILES
   callResponse.srv
+  WaypointService.srv
 )
 
 
@@ -88,6 +92,8 @@ catkin_python_setup()
 generate_messages(
   DEPENDENCIES
   std_msgs  # Or other packages containing msgs
+  sensor_msgs
+  mavros_msgs
 )
 
 ################################################
@@ -124,7 +130,7 @@ catkin_package(
 #  LIBRARIES gps_bagger
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
-CATKIN_DEPENDS rospy std_msgs message_runtime sensor_msgs tf 
+CATKIN_DEPENDS rospy std_msgs message_runtime sensor_msgs tf sensor_msgs mavros_msgs
 
 )
 
@@ -178,10 +184,10 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  scripts/gps_node.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# catkin_install_python(PROGRAMS
+#   scripts/gps_node.py
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
