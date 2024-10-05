@@ -27,7 +27,7 @@ class WaypointNavigator:
             new_waypoints = []
             for wp in req.waypoints:
                 # Create Pose objects from the incoming waypoints
-                new_waypoints.append(Pose(lat=wp.lat, lon=wp.lon, x=wp.x, y=wp.y, heading=wp.heading, yaw=wp.yaw))
+                new_waypoints.append(Pose(lat=wp.lat, lon=wp.lon, heading=wp.heading))
 
             # Update the waypoints
             self.waypoints = new_waypoints
