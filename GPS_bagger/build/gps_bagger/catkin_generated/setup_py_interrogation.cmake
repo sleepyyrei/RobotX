@@ -1,0 +1,7 @@
+set(gps_bagger_SETUP_PY_SETUP_MODULE "distutils.core")
+set(gps_bagger_SETUP_PY_VERSION "0.0.0")
+set(gps_bagger_SETUP_PY_SCRIPTS "")
+set(gps_bagger_SETUP_PY_PACKAGES "util;gps_bagger")
+set(gps_bagger_SETUP_PY_PACKAGE_DIRS "src/util;src/gps_bagger")
+set(gps_bagger_SETUP_PY_MODULES "")
+set(gps_bagger_SETUP_PY_MODULE_DIRS "")

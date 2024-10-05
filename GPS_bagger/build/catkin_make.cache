@@ -1,0 +1,2 @@
+gps_bagger
+-DCATKIN_DEVEL_PREFIX=/home/song/Rei_WS/RobotX/GPS_bagger/devel -DCMAKE_INSTALL_PREFIX=/home/song/Rei_WS/RobotX/GPS_bagger/install -G Unix Makefiles
