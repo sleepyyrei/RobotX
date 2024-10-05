@@ -34,7 +34,7 @@ class Bagger:
 
     def start_recording(self):
         # Define the command to start rosbag recording
-        self.recording_process = subprocess.Popen(['rosbag', 'record', '-O', '/bag', '/gps/gps_fix', '/gps/gps_cmd'])
+        self.recording_process = subprocess.Popen(['rosbag', 'record', '-O', '/bag', '/gps/gps_fix', '/mavros/global_position/global', '/mavros/imu/data', '/mavros/setpoint_raw/global'])
         rospy.loginfo("Started recording")
 
     def stop_recording(self):
