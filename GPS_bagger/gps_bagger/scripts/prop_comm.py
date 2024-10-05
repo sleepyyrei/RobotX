@@ -1,22 +1,45 @@
 import rospy
 from mavros_msgs.msg import GlobalPositionTarget
-from gps_common.msg import GPSFix
+from sensor_msgs.msg import NavSatFix  # Corrected import for GPS data
 from util.maps import Pose
 from math import radians, cos, sin, sqrt, atan2
 from typing import List
+from gps_bagger.srv import WaypointService, WaypointServiceResponse  # Import the custom service
 
 class WaypointNavigator:
-    def __init__(self, waypoints: List['Pose']):
-        self.waypoints = waypoints  # List of poses (waypoints)
+    def __init__(self):
+        self.waypoints = []  # List of poses (waypoints)
         self.current_goal_index = 0
         self.current_pose = None  # Store the current GPS location
         self.distance_threshold = 1.0  # 1 meter threshold
         
         # Set up publisher for waypoints and subscriber for current GPS position
         self.waypoint_pub = rospy.Publisher('/mavros/setpoint_raw/global', GlobalPositionTarget, queue_size=10)
-        rospy.Subscriber('/gps/gps_fix', GPSFix, self.gps_callback)
+        rospy.Subscriber('/gps/gps_fix', NavSatFix, self.gps_callback)  # Updated to use NavSatFix
+        
+        # Service to update waypoints
+        self.waypoint_service = rospy.Service('/waypoint_service', WaypointService, self.handle_waypoint_service)
+        rospy.loginfo("WaypointNavigator service started.")
 
-    def gps_callback(self, gps_data: GPSFix):
+    def handle_waypoint_service(self, req):
+        """Handle the incoming waypoints from the service."""
+        try:
+            new_waypoints = []
+            for wp in req.waypoints:
+                # Create Pose objects from the incoming waypoints
+                new_waypoints.append(Pose(lat=wp.lat, lon=wp.lon, x=wp.x, y=wp.y, heading=wp.heading, yaw=wp.yaw))
+
+            # Update the waypoints
+            self.waypoints = new_waypoints
+            self.current_goal_index = 0  # Reset to start with the first waypoint
+            rospy.loginfo(f"Received {len(new_waypoints)} new waypoints.")
+            return WaypointServiceResponse(success=True)
+        
+        except Exception as e:
+            rospy.logerr(f"Failed to process waypoints: {e}")
+            return WaypointServiceResponse(success=False)
+
+    def gps_callback(self, gps_data: NavSatFix):  # Updated to use NavSatFix message type
         """Callback function to get the current GPS position from the /gps/gps_fix topic."""
         self.current_pose = gps_data
         self.check_distance_to_goal()
