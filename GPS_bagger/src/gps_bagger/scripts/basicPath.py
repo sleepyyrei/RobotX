@@ -18,7 +18,7 @@ class BasicPath:
         try:
             gps_data = rospy.wait_for_message('/gps/gps_fix', NavSatFix, timeout=10)
             hdt = rospy.wait_for_message('/heading', Float64, timeout=10)
-            self.current_pose = Pose(lat=gps_data.latitude, lon=gps_data.longitude, heading=float(hdt), x=0, y=0)
+            self.current_pose = Pose(lat=gps_data.latitude, lon=gps_data.longitude, heading=float(hdt.data), x=0, y=0)
         except rospy.ROSException as e:
             rospy.logerr("Failed to receive GPS data: %s", str(e))
             pass

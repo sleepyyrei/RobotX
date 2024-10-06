@@ -1,4 +1,4 @@
-from maps import Pose
+from util.maps import Pose
 import numpy as np
 import matplotlib.pyplot as plt
 
