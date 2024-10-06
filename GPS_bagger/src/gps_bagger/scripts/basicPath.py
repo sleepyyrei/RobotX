@@ -28,7 +28,7 @@ class BasicPath:
             print("path not found")
             pass
         poses = basicPaths.pose_functions[self.path_name](
-            interval=self.interval,distance=self.distance,
+            interval=self.interval,distance=self.distance, radius=self.radius,
             amplitude=self.amplitude, direction=self.direction, current_pose=self.current_pose)
         if not self.waypoint_service_client(poses):
             rospy.logerr("Failed to call waypoint service")
@@ -42,6 +42,7 @@ class BasicPath:
         self.distance = rospy.get_param('~distance', 20)
         self.amplitude = rospy.get_param('~amplitude', 20)
         self.direction = rospy.get_param('~direction', 'clockwise')  # Default values provided
+        self.radius = rospy.get_param('~radius', 10)
 
     def waypoint_service_client(self, poses):
         """Call the WaypointService with the given waypoints and headings."""
