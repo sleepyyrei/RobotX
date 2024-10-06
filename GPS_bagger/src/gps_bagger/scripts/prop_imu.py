@@ -4,6 +4,7 @@ import rospy
 from sensor_msgs.msg import Imu
 from std_msgs.msg import Float64
 import math
+import tf
 
 class IMUHeadingCalculator:
     def __init__(self):
@@ -17,24 +18,20 @@ class IMUHeadingCalculator:
         
         self.rate = rospy.Rate(10)  # Set the publishing rate to 10 Hz
 
-    def imu_callback(self, imu_data):
+    def imu_callback(self, data):
         """Callback function to process incoming IMU data."""
-        # Extract magnetometer data from IMU message
-        mag_x = imu_data.magnetic_field.x
-        mag_y = imu_data.magnetic_field.y
-        
-        # Calculate heading from magnetometer readings
-        heading = self.calculate_heading(mag_x, mag_y)
+        quaternion = (
+            data.orientation.x,
+            data.orientation.y,
+            data.orientation.z,
+            data.orientation.w
+        )
+    
+        # Convert quaternion to roll, pitch, and yaw
+        roll, pitch, yaw = tf.transformations.euler_from_quaternion(quaternion)
         
         # Publish the heading
-        self.publish_heading(heading)
-
-    def calculate_heading(self, mag_x, mag_y):
-        """Calculate heading from magnetometer readings."""
-        heading = math.atan2(mag_y, mag_x)  # Heading in radians
-        heading = math.degrees(heading)      # Convert to degrees
-        heading = (heading + 360) % 360      # Normalize to [0, 360)
-        return heading
+        self.publish_heading(yaw)
 
     def publish_heading(self, heading):
         """Publish heading as a Float64 message."""
