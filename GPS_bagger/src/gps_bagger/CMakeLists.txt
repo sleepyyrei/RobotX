@@ -23,7 +23,7 @@ catkin_install_python(PROGRAMS
   scripts/gps_mock.py
   scripts/prop_comm.py
   scripts/prop_comm_tester.py
-  scripts/diamond.py
+  scripts/basicPath.py
   scripts/bagger.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
