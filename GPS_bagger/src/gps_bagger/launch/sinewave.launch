@@ -1,0 +1,13 @@
+<launch>
+    <node name="basicPath" pkg="gps_bagger" type="basicPath.py" output="screen">
+        <!-- Set parameters for the BasicPath node -->
+        <param name="path_name" value="sine wave" />
+        <param name="interval" value="2" />
+        <param name="distance" value="20" />
+        <param name="amplitude" value="20" />
+        <param name="direction" value="clockwise" />
+
+        <!-- Optional: Remap topics if necessary -->
+        <!-- Example: <remap from="/gps/gps_fix" to="/your/custom/topic" /> -->
+    </node>
+</launch>
