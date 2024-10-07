@@ -52,6 +52,9 @@ def parse_hdt(hdt_message):
     parts = hdt_message.split(',')
 
     # Extract the heading (true heading) which is typically in parts[1]
-    heading = float(parts[1])
+    try:
+        heading = float(parts[1])
+    except:
+        pass
 
     return heading
