@@ -8,7 +8,7 @@ from util.parser import parse_gpgga, parse_hdt
 
 def read_gps_data():
     # Replace '/dev/ttyUSB0' with your serial port
-    ser = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+    ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
     rospy.loginfo("Connected to GPS")
 
     while not rospy.is_shutdown():
@@ -27,7 +27,7 @@ def read_gps_data():
 
                     rospy.loginfo("Publishing GPS data: %s", gps_msg)
                     gps_pub.publish(gps_msg)
-            elif sentence.startswith("$HDT"):
+            elif sentence.startswith("$GPHDT"):
                 heading = parse_hdt(sentence)
                 if heading is not None:
                     heading_msg = Float64(heading)
