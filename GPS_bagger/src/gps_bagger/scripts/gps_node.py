@@ -37,7 +37,7 @@ def read_gps_data():
 if __name__ == '__main__':
     rospy.init_node('gps_node', anonymous=True)
     gps_pub = rospy.Publisher('/gps/gps_fix', NavSatFix, queue_size=10)
-    hdt_pub = rospy.Publisher('/heading', NavSatFix, queue_size=10)
+    hdt_pub = rospy.Publisher('/heading', Float64, queue_size=10)
     try:
         read_gps_data()
     except rospy.ROSInterruptException:
