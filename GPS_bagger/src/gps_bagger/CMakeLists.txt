@@ -20,6 +20,7 @@ add_service_files(
 
 catkin_install_python(PROGRAMS
   scripts/gps_node.py
+  scripts/gps_filter.py
   scripts/gps_mock.py
   scripts/prop_comm.py
   scripts/prop_comm_tester.py
