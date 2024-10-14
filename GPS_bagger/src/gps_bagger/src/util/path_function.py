@@ -113,7 +113,7 @@ class basicPaths:
             
         line_distance = 0
         poses = []
-        while line_distance < distance:
+        while line_distance <= distance:
             new_pose = Pose(x=line_distance, y=0, yaw=0, origin=current_pose, heading=None)
             poses.append(new_pose)
             line_distance += interval
@@ -152,14 +152,16 @@ class basicPaths:
         y = y_line + y_circle + y_back
         poses = basicPaths.generate_poses(x, y, basicPaths.generate_yaw(x, y), current_pose)
         return poses
-    
+    def generateStationaryPose(current_pose, **kwargs):
+        return basicPaths.generateLinePose(current_pose=current_pose, interval=1, distance=0)
     # Store pose generation functions
-    pose_functions = {
-        "straight line": generateLinePose,
-        "sine wave": generateSinePose,
-        "circle": generateCirclePose,
-        "U-turn": generateUTurnPose
-    }
+basicPaths.pose_functions = {
+    "straight line": basicPaths.generateLinePose,
+    "sine wave": basicPaths.generateSinePose,
+    "circle": basicPaths.generateCirclePose,
+    "U-turn": basicPaths.generateUTurnPose,
+    "stationary" : basicPaths.generateStationaryPose
+}
 
 
 

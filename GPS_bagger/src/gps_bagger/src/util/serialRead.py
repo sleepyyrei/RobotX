@@ -2,7 +2,7 @@ import serial
 
 # Open serial port
 ser = serial.Serial(
-    port='COM4',         # Replace with your COM port (e.g., '/dev/ttyUSB0' for Linux)
+    port='/dev/ttyUSB0',         # Replace with your COM port (e.g., '/dev/ttyUSB0' for Linux)
     baudrate=115200,       # Set baud rate (match with sender's baud rate)
     timeout=1            # Set timeout for reading
 )
