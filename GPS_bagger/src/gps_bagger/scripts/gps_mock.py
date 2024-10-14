@@ -17,7 +17,7 @@ class MockGPS:
         self.fixed_altitude = 0.0        # Altitude (can be set to any value)
 
         # Fixed heading (in degrees)
-        self.fixed_heading = 90.0  # Example heading value (you can change it)
+        self.fixed_heading = 0.0  # Example heading value (you can change it)
 
     def publish_gps_fix(self):
         """Publish a fixed GPS location."""
@@ -28,7 +28,7 @@ class MockGPS:
         gps_msg.latitude = self.fixed_latitude     # Set the fixed latitude
         gps_msg.longitude = self.fixed_longitude    # Set the fixed longitude
         gps_msg.altitude = self.fixed_altitude      # Set the fixed altitude
-
+        self.fixed_latitude += 0.00001
         # # Set status (indicating a valid GPS fix)
         # gps_msg.status.status = NavSatFix.STATUS_FIX
         # gps_msg.status.service = NavSatFix.SERVICE_GPS
