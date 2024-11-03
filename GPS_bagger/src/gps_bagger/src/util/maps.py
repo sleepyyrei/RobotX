@@ -1,5 +1,6 @@
 from typing import Optional, cast
-from util.common_utilities import enu_to_gps, gps_to_enu, convert_cartesian
+# from util.common_utilities import enu_to_gps, gps_to_enu, convert_cartesian
+from common_utilities import enu_to_gps, gps_to_enu, convert_cartesian
 
 
 class Pose:
@@ -11,7 +12,7 @@ class Pose:
                     origin: Optional['Pose']=None, # Frame of reference from which x-y coordinates are based
                     heading: Optional[float] = 0, # Angle of pose relative to north (clockwise is positive)
                     yaw: Optional[float] = 0): # Angle of pose relative to origin (counterclockwise is positive)
-        self.lat = lat
+        self.lat = lat 
         self.lon = lon
         self.x = x
         self.y = y
@@ -19,7 +20,7 @@ class Pose:
         self.heading = heading
         self.yaw = yaw
         self.tolerance = 0.1  # Define tolerance value, adjust as needed
-        
+         
         if origin is None or origin.isValidOrigin() == False:
             return
         # Calculate yaw based on heading and origin heading
@@ -104,10 +105,10 @@ class Pose:
         if self.hasGPSCoords():
             testPose = Pose(self.lat, self.lon,origin=new_origin,heading=self.heading, yaw=None)
             errorFlag = False
-            if not Pose.check_tolerance(testPose.x, x_new, 0.001):
+            if not Pose.check_tolerance(testPose.x, x_new, 0.01):
                 print("change origin, GPS x", testPose.x, "Cartesian X", x_new)
                 errorFlag = True
-            if not Pose.check_tolerance(testPose.y, y_new, 0.001):
+            if not Pose.check_tolerance(testPose.y, y_new, 0.01):
                 print("change origin, GPS Y", testPose.y, "Cartesian Y", y_new)
                 errorFlag = True
             if not Pose.check_tolerance(testPose.yaw, yaw_new, 0.0001):
@@ -175,6 +176,14 @@ class Pose:
             tolerance: The tolerance range.
         """
         return abs(calculated_value - reference_value) <= tolerance
+    
+    def __eq__(self, value: object) -> bool:
+        if not isinstance(value, Pose):
+            return False
+        return (Pose.check_tolerance(self.lat, value.lat, 0.0000001) and Pose.check_tolerance(self.lon, value.lon, 0.0000001) 
+                and Pose.check_tolerance(self.x, value.x, 0.01) and Pose.check_tolerance(self.y, value.y, 0.01)
+                and self.origin == value.origin and Pose.check_tolerance(self.heading, value.heading, 0.0000001)
+                and Pose.check_tolerance(self.yaw, value.yaw, 0.0000001))
 
 class Obstacle(Pose):
     def __init__(self, 
@@ -194,6 +203,9 @@ class Obstacle(Pose):
         # Additional attributes for Obstacle class
         self.colour = colour
         self.object_type = object_type
+
+    def sameObjectType(self, other:'Obstacle'):
+        return isinstance(other, Obstacle) and self.object_type == other.object_type and self.colour == other.colour
 
     def __str__(self):
         # Extend Pose class's __str__ method to include obstacle-specific details
