@@ -58,7 +58,7 @@ def heuristic(node1, node2):
     """
     return (np.linalg.norm(np.array(node1) - np.array(node2)))*.75  # Increased weight effect
 
-def plot_graph_with_obstacles(grid_points, graph, red_row, blue_row, obstacles, weights=None, path=None, start_point=None, end_point=None, spacing=0.5):
+def plot_graph_with_obstacles(grid_points, graph, blue_row, red_row, obstacles, weights=None, path=None, start_point=None, end_point=None, spacing=0.5):
     """
     Plot the directed graph of grid points with connections to adjacent points, including obstacles, start and end points, path, and edge weights.
     The function also includes arrows to indicate the direction of the edges, with arrow color based on the edge weights.
@@ -68,8 +68,8 @@ def plot_graph_with_obstacles(grid_points, graph, red_row, blue_row, obstacles, 
     
     # Plot the obstacle points (row1 and row2)
     plt.scatter(obstacles[:, 0], obstacles[:, 1], color='black', s=100, label='Obstacle Points', zorder=4)
-    plt.scatter(red_row[:, 0], red_row[:, 1], color='red', s=100, label='Red Bouys', zorder=4)
-    plt.scatter(blue_row[:, 0], blue_row[:, 1], color='blue', s=100, label='Blue Bouys', zorder=4)
+    plt.scatter(blue_row[:, 0], blue_row[:, 1], color='blue', s=100, label='blue Bouys', zorder=4)
+    plt.scatter(red_row[:, 0], red_row[:, 1], color='red', s=100, label='red Bouys', zorder=4)
 
     # Extract node positions and colors for plotting
     nodes = list(graph.nodes())
@@ -108,9 +108,9 @@ def plot_graph_with_obstacles(grid_points, graph, red_row, blue_row, obstacles, 
     
     # Highlight start point in green and end point in yellow
     if start_point != None:
-        plt.scatter(start_point[0], start_point[1], color='red', s=200, label='Start Point', zorder=5)
+        plt.scatter(start_point[0], start_point[1], color='blue', s=200, label='Start Point', zorder=5)
     if end_point != None:
-        plt.scatter(end_point[0], end_point[1], color='red', s=200, label='End Point', zorder=5)
+        plt.scatter(end_point[0], end_point[1], color='blue', s=200, label='End Point', zorder=5)
 
     plt.title('Directed Graph of Grid Points with Obstacles and Path')
     plt.xlabel('X')
@@ -125,7 +125,7 @@ def plot_graph_with_obstacles(grid_points, graph, red_row, blue_row, obstacles, 
 
 
 # Generate example rows for demonstration
-num_points = 5
+num_points = 2
 start = 0
 end = 10
 noise_level = 5.0
@@ -133,16 +133,18 @@ min_distance = 10.0
 num_random_points = 50
 
 # Generate grid points and calculate weights
-red_row, blue_row, obs, gridpoints, weights, start_point, end_point = generate_bouys_graph_weights(5,0,50,10,4,50,1,1.5,)
+blue_row, red_row, obs, gridpoints, weights, start_point, end_point = generate_bouys_graph_weights(2,0,10,5,4,20,1,1.5)
+
+blue_row = blue_row[:1]
 
 if (start_point.all == None or end_point.all == None):
     print("No start/endpoint")
-    plot_grid_points_with_weights_and_rows(gridpoints, red_row, blue_row, obs, start_point, end_point)
+    plot_grid_points_with_weights_and_rows(gridpoints, blue_row, red_row, obs, start_point, end_point)
     
 
 # Create and plot the graph
 graph = create_graph(gridpoints, weights, spacing=1)
-obstacles = np.vstack((red_row, blue_row, obs))
+obstacles = np.vstack((blue_row, red_row, obs))
 # plot_graph_with_obstacles(gridpoints, graph, obstacles, weights, path=None, start_point=start_point, end_point=end_point)
 
 start_node = (np.float64(start_point[0]), np.float64(start_point[1]))
@@ -155,5 +157,5 @@ except nx.NetworkXNoPath:
     path = []
 
 # Plot the graph and the path
-plot_graph_with_obstacles(gridpoints, graph, red_row, blue_row, obs, weights, path, start_node, end_node)
+plot_graph_with_obstacles(gridpoints, graph, blue_row, red_row, obs, weights, path, start_node, end_node)
 
