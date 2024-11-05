@@ -12,6 +12,7 @@ class WaypointNavigator:
         self.current_goal_index = 0
         self.current_pose = None  # Store the current GPS location
         self.distance_threshold = 1.0  # 1 meter threshold
+        self.heading_threshold = 1.0  # 1 meter threshold
         
         # Set up publisher for waypoints and subscriber for current GPS position
         self.waypoint_pub = rospy.Publisher('/mavros/setpoint_raw/global', GlobalPositionTarget, queue_size=10)
@@ -47,12 +48,18 @@ class WaypointNavigator:
         self.current_pose = gps_data
         self.check_distance_to_goal()
 
+    def heading_callback(self, msg):
+        self.heading = msg.data
+        self.check_distance_to_goal()
+
     def check_distance_to_goal(self):
         """Check the distance between the current GPS position and the goal pose."""
         if self.current_pose is None or self.current_goal_index >= len(self.waypoints):
             return
         
         current_goal = self.waypoints[self.current_goal_index]
+
+        closest_goal = current_goal
         
         if not current_goal.hasGPSCoords():
             rospy.logwarn("Goal pose does not have valid GPS coordinates.")
@@ -60,10 +67,21 @@ class WaypointNavigator:
 
         distance = self.haversine_distance(self.current_pose.latitude, self.current_pose.longitude,
                                            current_goal.lat, current_goal.lon)
+        
+        closest_distance = distance
 
-        rospy.loginfo(f"Distance to goal: {distance:.2f} meters")
+        for i in range(self.current_goal_index, len(self.waypoints)):
+            distance = self.haversine_distance(self.current_pose.latitude, self.current_pose.longitude,
+                                           self.waypoints[i].lat, self.waypoints[i].lon)
+            if distance < closest_distance:
+                closest_goal = self.waypoints[i]
+                closest_distance = distance
+                self.current_goal_index = i
 
-        if distance <= self.distance_threshold:
+        rospy.loginfo(f"Distance to goal: {closest_distance:.2f} meters")
+
+        if (distance <= self.distance_threshold and
+            (closest_goal.heading is None or abs(self.heading - closest_goal.heading) < self.heading_threshold)) :
             rospy.loginfo(f"Reached waypoint {self.current_goal_index}, sending next waypoint.")
             self.send_next_waypoint()
 
