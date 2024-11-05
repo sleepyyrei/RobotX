@@ -25,6 +25,7 @@ class basicPaths:
         y = [start[1]] * len(x)
         return x, y
 
+
     @staticmethod
     def generate_sine_wave(start, end, num_points, period, amplitude):
         """Generate x-values and corresponding sine y-values with specified period and amplitude."""
@@ -71,6 +72,13 @@ class basicPaths:
             sampled_y.append(y_values[-1])
             
         return sampled_x, sampled_y
+
+    def generate_search_pattern(x, y):
+        x_values = [x, 2*x]
+        y_values = [y, -y]
+        yaws = [-np.arctan(y/x), np.arctan(y/x)] 
+        return x_values, y_values, yaws
+
 
     @staticmethod
     def generate_yaw(x_values, y_values):
@@ -154,6 +162,45 @@ class basicPaths:
         return poses
     def generateStationaryPose(current_pose, **kwargs):
         return basicPaths.generateLinePose(current_pose=current_pose, interval=1, distance=0)
+    
+    @staticmethod
+    def generate_search_poses(current_pose, x, y):
+        x_values, y_values, yaw  = basicPaths.generate_search_pattern(x, y)
+        return basicPaths.generate_poses(x_values=x_values, y_values=y_values,yaws=yaw)
+
+    @staticmethod
+    def entrance_exit_gate(gates, black bouy):
+        if gates is not None:
+            if len(gates > 1):
+
+                def find_midpoint(x1,y1,x2,y2,d):
+                
+                    # Step 1: Calculate the midpoint
+                    mid_x = (x1 + x2) / 2
+                    mid_y = (y1 + y2) / 2
+
+                    # Step 2: Calculate the slope of the line between the two points
+                    if x2 != x1:  # Avoid division by zero for a vertical line
+                        m = (y2 - y1) / (x2 - x1)
+                        # Step 3: Calculate the slope of the perpendicular line
+                        m_perp = -1 / m
+                    else:
+                        m_perp = 0  # For a vertical line, the perpendicular is horizontal
+
+                    # Step 4: Calculate the coordinates of the points at distance d from the midpoint
+                    # Use both positive and negative directions along the perpendicular line
+                    dx = d / np.sqrt(1 + m_perp**2)
+                    dy = m_perp * dx
+
+                    # Calculate the two points
+                    point1 = (mid_x + dx, mid_y + dy)
+                    point2 = (mid_x - dx, mid_y - dy)
+                    return [mid_x, mid_y], point2
+                
+        
+                pass
+
+
     # Store pose generation functions
 basicPaths.pose_functions = {
     "straight line": basicPaths.generateLinePose,
