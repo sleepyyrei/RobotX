@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "/home/song/Rei_WS/RobotX/GPS_bagger/devel/share/common-lisp/ros/gps_bagger/msg/Obstacles.lisp"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/share/common-lisp/ros/gps_bagger/srv/WaypointService.lisp"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/share/common-lisp/ros/gps_bagger/srv/callResponse.lisp"
   "CMakeFiles/gps_bagger_generate_messages_lisp"

@@ -53,33 +53,53 @@ CMAKE_BINARY_DIR = /home/song/Rei_WS/RobotX/GPS_bagger/build
 # Include the progress variables for this target.
 include gps_bagger/CMakeFiles/gps_bagger_generate_messages_py.dir/progress.make
 
+gps_bagger/CMakeFiles/gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py
 gps_bagger/CMakeFiles/gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py
 gps_bagger/CMakeFiles/gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py
+gps_bagger/CMakeFiles/gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py
 gps_bagger/CMakeFiles/gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py
 
 
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py: /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatStatus.msg
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatFix.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG gps_bagger/Obstacles"
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg -Igps_bagger:/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg -Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg -p gps_bagger -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg
+
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py: /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code from SRV gps_bagger/callResponse"
-	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg -Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg -p gps_bagger -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python code from SRV gps_bagger/callResponse"
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv -Igps_bagger:/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg -Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg -p gps_bagger -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv
 
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv
-/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatFix.msg
-/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatStatus.msg
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python code from SRV gps_bagger/WaypointService"
-	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg -Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg -p gps_bagger -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatStatus.msg
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py: /opt/ros/noetic/share/sensor_msgs/msg/NavSatFix.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python code from SRV gps_bagger/WaypointService"
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv -Igps_bagger:/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg -Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg -Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg -p gps_bagger -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv
+
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating Python msg __init__.py for gps_bagger"
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg --initpy
 
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
+/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py
 /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating Python srv __init__.py for gps_bagger"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/song/Rei_WS/RobotX/GPS_bagger/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python srv __init__.py for gps_bagger"
 	cd /home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv --initpy
 
 gps_bagger_generate_messages_py: gps_bagger/CMakeFiles/gps_bagger_generate_messages_py
+gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py
 gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py
 gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py
+gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py
 gps_bagger_generate_messages_py: /home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py
 gps_bagger_generate_messages_py: gps_bagger/CMakeFiles/gps_bagger_generate_messages_py.dir/build.make
 

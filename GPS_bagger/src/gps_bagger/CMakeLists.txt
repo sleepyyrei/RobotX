@@ -21,12 +21,14 @@ add_service_files(
 catkin_install_python(PROGRAMS
   scripts/gps_node.py
   scripts/gps_filter.py
+  scripts/gps_republisher.py
   scripts/gps_mock.py
   scripts/prop_comm.py
   scripts/prop_comm_tester.py
   scripts/prop_imu.py
   scripts/basicPath.py
   scripts/bagger.py
+  scripts/nav_channel.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 catkin_python_setup()
@@ -92,6 +94,11 @@ catkin_python_setup()
 #   Action2.action
 # )
 
+add_message_files(
+  FILES
+  Obstacles.msg
+)
+
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
@@ -99,6 +106,8 @@ generate_messages(
   sensor_msgs
   mavros_msgs
 )
+
+
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##

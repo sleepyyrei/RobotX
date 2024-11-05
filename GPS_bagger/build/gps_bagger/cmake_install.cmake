@@ -49,6 +49,14 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/gps_filter.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/gps_republisher.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/gps_mock.py")
 endif()
 
@@ -61,7 +69,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/diamond.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/prop_imu.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/basicPath.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
@@ -69,7 +81,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/gps_bagger" TYPE PROGRAM FILES "/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/installspace/nav_channel.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   include("/home/song/Rei_WS/RobotX/GPS_bagger/build/gps_bagger/catkin_generated/safe_execute_install.cmake")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gps_bagger/msg" TYPE FILE FILES "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)

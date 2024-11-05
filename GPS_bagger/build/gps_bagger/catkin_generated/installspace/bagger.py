@@ -2,8 +2,9 @@
 
 import rospy
 import subprocess
-from gps_bagger.srv import callResponse
-
+from datetime import datetime
+from gps_bagger.srv import callResponse, callResponseResponse
+import os
 class Bagger:
     def __init__(self):
         self.recording_process = None
@@ -19,23 +20,32 @@ class Bagger:
             if self.recording_process is None:
                 # Start recording
                 self.start_recording()
-                return baggerResponse(response="Started recording")
+                return callResponseResponse(response="Started recording")
             else:
-                return baggerResponse(response="Already recording")
+                return callResponseResponse(response="Already recording")
         elif req.command == "stop":
             if self.recording_process is not None:
                 # Stop recording
                 self.stop_recording()
-                return baggerResponse(response="Stopped recording")
+                return callResponseResponse(response="Stopped recording")
             else:
-                return baggerResponse(response="Not recording")
+                return callResponseResponse(response="Not recording")
         else:
-            return baggerResponse(response="Invalid command")
+            return callResponseResponse(response="Invalid command")
 
     def start_recording(self):
-        # Define the command to start rosbag recording
-        self.recording_process = subprocess.Popen(['rosbag', 'record', '-O', '/bag', '/gps/gps_fix', '/gps/gps_cmd'])
-        rospy.loginfo("Started recording")
+        # Generate a timestamp for the filename
+        timestamp = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        filename = os.path.expanduser(f"~/Rei_WS/rosbags/bag_{timestamp}.bag")  # Save in workspace directory
+
+        # Start recording with the generated filename
+        self.recording_process = subprocess.Popen(['rosbag', 'record', '-O', filename, 
+                                                '/gps/gps_fix', 
+                                                '/mavros/global_position/global', 
+                                                '/mavros/imu/data', 
+                                                '/mavros/setpoint_raw/global'])
+        rospy.loginfo(f"Started recording to {filename}")
+
 
     def stop_recording(self):
         if self.recording_process:

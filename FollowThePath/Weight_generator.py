@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
 from scipy.interpolate import interp1d
-from Point_generator import generate_bouys_graph_weights, plot_grid_points_with_weights_and_rows
+from Point_generator import generate_bouys_graph_weights, plot_grid_points_with_weights_and_rows, generate_grid_and_weights, find_start_end_points
 from networkx.algorithms.shortest_paths import astar_path
 
 import numpy as np
@@ -133,17 +133,21 @@ min_distance = 10.0
 num_random_points = 50
 
 # Generate grid points and calculate weights
-blue_row, red_row, obs, gridpoints, weights, start_point, end_point = generate_bouys_graph_weights(2,0,10,5,4,20,1,1.5)
+blue_row, red_row, obs, gridpoints, weights, start_point, end_point = generate_bouys_graph_weights(2,0,10,5,4,0,1,1.5)
 
-blue_row = blue_row[:1]
+blue_row = np.array([[2,4]])
+red_row = np.array([[-5,3]])
 
+gridpoints, weights = generate_grid_and_weights(blue_row=blue_row, red_row=red_row, obs=np.empty([0,2]),spacing=.5)
+print(len(gridpoints))
+start_point, end_point = find_start_end_points(grid_points=gridpoints, blue_row=blue_row,red_row=red_row)
 if (start_point.all == None or end_point.all == None):
     print("No start/endpoint")
     plot_grid_points_with_weights_and_rows(gridpoints, blue_row, red_row, obs, start_point, end_point)
     
 
 # Create and plot the graph
-graph = create_graph(gridpoints, weights, spacing=1)
+graph = create_graph(gridpoints, weights, spacing=.5)
 obstacles = np.vstack((blue_row, red_row, obs))
 # plot_graph_with_obstacles(gridpoints, graph, obstacles, weights, path=None, start_point=start_point, end_point=end_point)
 

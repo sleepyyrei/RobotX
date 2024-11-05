@@ -33,7 +33,8 @@ class WaypointNavigator:
 
             # Update the waypoints
             self.waypoints = new_waypoints
-            self.current_goal_index = 0  # Reset to start with the first waypoint
+            self.publish_waypoint(self.waypoints[0])
+            self.current_goal_index = 1  # Reset to start with the first waypoint
             rospy.loginfo(f"Received {len(new_waypoints)} new waypoints.")
             return WaypointServiceResponse(success=True)
         

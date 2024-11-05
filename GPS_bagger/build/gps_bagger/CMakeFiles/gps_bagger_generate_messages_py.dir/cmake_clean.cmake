@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/_Obstacles.py"
+  "/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/msg/__init__.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_WaypointService.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/__init__.py"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/lib/python3/dist-packages/gps_bagger/srv/_callResponse.py"

@@ -273,6 +273,21 @@ _gps_bagger_generate_messages_check_deps_callResponse/fast:
 .PHONY : _gps_bagger_generate_messages_check_deps_callResponse/fast
 
 # Convenience name for target.
+gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/rule:
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build && $(MAKE) -f CMakeFiles/Makefile2 gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/rule
+.PHONY : gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/rule
+
+# Convenience name for target.
+_gps_bagger_generate_messages_check_deps_Obstacles: gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/rule
+
+.PHONY : _gps_bagger_generate_messages_check_deps_Obstacles
+
+# fast build rule for target.
+_gps_bagger_generate_messages_check_deps_Obstacles/fast:
+	cd /home/song/Rei_WS/RobotX/GPS_bagger/build && $(MAKE) -f gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/build.make gps_bagger/CMakeFiles/_gps_bagger_generate_messages_check_deps_Obstacles.dir/build
+.PHONY : _gps_bagger_generate_messages_check_deps_Obstacles/fast
+
+# Convenience name for target.
 gps_bagger/CMakeFiles/gps_bagger_generate_messages.dir/rule:
 	cd /home/song/Rei_WS/RobotX/GPS_bagger/build && $(MAKE) -f CMakeFiles/Makefile2 gps_bagger/CMakeFiles/gps_bagger_generate_messages.dir/rule
 .PHONY : gps_bagger/CMakeFiles/gps_bagger_generate_messages.dir/rule
@@ -1281,6 +1296,7 @@ help:
 	@echo "... gps_bagger_gencpp"
 	@echo "... gps_bagger_generate_messages_cpp"
 	@echo "... _gps_bagger_generate_messages_check_deps_callResponse"
+	@echo "... _gps_bagger_generate_messages_check_deps_Obstacles"
 	@echo "... gps_bagger_generate_messages"
 	@echo "... gps_bagger_genlisp"
 	@echo "... std_msgs_generate_messages_lisp"

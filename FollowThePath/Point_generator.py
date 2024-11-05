@@ -102,7 +102,7 @@ def generate_points(num_points, start, end, noise_level, min_distance, num_rando
 def inverse_distance_weight(distance):
     return 10 / (distance)
 
-def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radius=0, weight_function=None):
+def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radius=0, weight_function=inverse_distance_weight):
     """
     Generate a grid of points spaced `spacing` units apart between two rows and calculate their weights,
     excluding points within `exclusion_radius` units of any obstacles.
@@ -132,7 +132,6 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
         interp_red_row = lambda x: interp_blue_row(x) + offset
 
     elif (blue_row.shape[0] == 1 and red_row.shape[0] == 1) or ((blue_row.shape[0] == 0) ^ (red_row.shape[0] == 0)):
-
         # Define line from (0, 0) to the blue or red point
         if blue_row.shape[0] > 0:
             blue_point = blue_row[0]
@@ -167,8 +166,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
         interp_red_row = interp1d(red_row[:, 0], red_row[:, 1], bounds_error=False, fill_value="extrapolate")
 
     if blue_row.shape[0] == 0:
-        x_min = red_row[:, 0].min()
-        y_min = red_row[:, 1].min()
+        x_min = min(red_row[:, 0].min(),-1)
+        y_min = min(red_row[:, 1].min(),-1)
         if red_row.shape[0] == 1:
             x_max = red_row[:, 0].max() + 10
             y_max = red_row[:, 1].max() + 10
@@ -176,8 +175,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             x_max = red_row[:, 0].max() 
             y_max = red_row[:, 1].max()
     elif red_row.shape[0] == 0:
-        x_min = blue_row[:, 0].min()
-        y_min = blue_row[:, 1].min()
+        x_min = min(blue_row[:, 0].min(),-1)
+        y_min = min(blue_row[:, 1].min(),-1)
         if blue_row.shape[0] == 1:
             x_max = blue_row[:, 0].max() + 10
             y_max = blue_row[:, 1].max() + 10
@@ -187,9 +186,9 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             
     else:
         # Define the x and y range for the grid
-        x_min = min(blue_row[:, 0].min(), red_row[:, 0].min())
+        x_min = min(blue_row[:, 0].min(), red_row[:, 0].min(),-1)
         x_max = max(blue_row[:, 0].max(), red_row[:, 0].max())
-        y_min = min(blue_row[:, 1].min(), red_row[:, 1].min())
+        y_min = min(blue_row[:, 1].min(), red_row[:, 1].min(),-1)
         y_max = max(blue_row[:, 1].max(), red_row[:, 1].max())
 
     # Generate x and y coordinates for the grid
@@ -430,11 +429,14 @@ if __name__ == "__main__":
     min_distance = 5
     num_random_points = 20
 
-    blue_row, red_row, obs = generate_points(num_points, start, end, noise_level, min_distance, num_random_points)
-    # After your print statements:
-    blue_row = blue_row[:1] # Ensures blue_row is 2D
-    # red_row = np.empty((0,0))
+    # blue_row, red_row, obs = generate_points(num_points, start, end, noise_level, min_distance, num_random_points)
+    # # After your print statements:
+    # blue_row = blue_row[:1] # Ensures blue_row is 2D
+    # # red_row = np.empty((0,0))
 
+    blue_row = np.array([[2,4]])
+    red_row = np.array([[-5,3]])
+    obs = np.empty([0,2])
 
     # Generate grid points and weights
     filtered_grid_points, weights = generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radius=1.5, weight_function=inverse_distance_weight)

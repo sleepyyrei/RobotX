@@ -1,10 +1,24 @@
 <launch>
     <!-- Launch GPS Node -->
-    <node pkg="gps_bagger" type="gps_node.py" name="gps_node" output="screen"/>
+    <node pkg="gps_bagger" type="gps_republisher.py" name="gps_node" output="screen"/>
 
     <!-- Launch Propagation Communication Node -->
     <node pkg="gps_bagger" type="prop_comm.py" name="prop_comm" output="screen"/>
 
     <!-- Launch Bagger Node -->
     <node pkg="gps_bagger" type="bagger.py" name="bagger" output="screen"/>
+
+    <!-- Launch MAVROS for PX4 -->
+    <node pkg="mavros" type="mavros_node" name="mavros" output="screen">
+        <!-- Set the serial port and baudrate -->
+        <param name="fcu_url" value="serial:///dev/ttyACM0:57600"/>
+        
+        <!-- Load MAVROS plugin configurations -->
+        <rosparam command="load" file="$(find mavros)/launch/apm_pluginlists.yaml"/>
+        <rosparam command="load" file="$(find mavros)/launch/apm_config.yaml"/>
+        
+        <!-- (Optional) Load PX4-specific configuration, if needed -->
+        <rosparam command="load" file="$(find mavros)/launch/px4_config.yaml"/>
+    </node>
 </launch>
+

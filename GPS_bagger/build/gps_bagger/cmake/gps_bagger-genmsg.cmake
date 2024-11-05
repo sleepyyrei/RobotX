@@ -1,8 +1,8 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "gps_bagger: 0 messages, 2 services")
+message(STATUS "gps_bagger: 1 messages, 2 services")
 
-set(MSG_I_FLAGS "-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg;-Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg;-Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg;-Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Igps_bagger:/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg;-Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg;-Isensor_msgs:/opt/ros/noetic/share/sensor_msgs/cmake/../msg;-Imavros_msgs:/opt/ros/noetic/share/mavros_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg;-Igeographic_msgs:/opt/ros/noetic/share/geographic_msgs/cmake/../msg;-Iuuid_msgs:/opt/ros/noetic/share/uuid_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -17,6 +17,11 @@ add_custom_target(gps_bagger_generate_messages ALL)
 
 
 
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" "std_msgs/Header:sensor_msgs/NavSatStatus:sensor_msgs/NavSatFix"
+)
+
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" ""
@@ -24,7 +29,7 @@ add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
 add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" "sensor_msgs/NavSatFix:sensor_msgs/NavSatStatus:std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "gps_bagger" "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" "std_msgs/Header:sensor_msgs/NavSatStatus:sensor_msgs/NavSatFix"
 )
 
 #
@@ -33,6 +38,12 @@ add_custom_target(_gps_bagger_generate_messages_check_deps_${_filename}
 
 ### Section generating for lang: gencpp
 ### Generating Messages
+_generate_msg_cpp(gps_bagger
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/gps_bagger
+)
 
 ### Generating Services
 _generate_srv_cpp(gps_bagger
@@ -44,7 +55,7 @@ _generate_srv_cpp(gps_bagger
 _generate_srv_cpp(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/gps_bagger
 )
 
@@ -60,6 +71,8 @@ add_custom_target(gps_bagger_generate_messages_cpp
 add_dependencies(gps_bagger_generate_messages gps_bagger_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_dependencies(gps_bagger_generate_messages_cpp _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_dependencies(gps_bagger_generate_messages_cpp _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
@@ -74,6 +87,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gps_bagger_generate_messages_cpp)
 
 ### Section generating for lang: geneus
 ### Generating Messages
+_generate_msg_eus(gps_bagger
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/gps_bagger
+)
 
 ### Generating Services
 _generate_srv_eus(gps_bagger
@@ -85,7 +104,7 @@ _generate_srv_eus(gps_bagger
 _generate_srv_eus(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/gps_bagger
 )
 
@@ -101,6 +120,8 @@ add_custom_target(gps_bagger_generate_messages_eus
 add_dependencies(gps_bagger_generate_messages gps_bagger_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_dependencies(gps_bagger_generate_messages_eus _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_dependencies(gps_bagger_generate_messages_eus _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
@@ -115,6 +136,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gps_bagger_generate_messages_eus)
 
 ### Section generating for lang: genlisp
 ### Generating Messages
+_generate_msg_lisp(gps_bagger
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/gps_bagger
+)
 
 ### Generating Services
 _generate_srv_lisp(gps_bagger
@@ -126,7 +153,7 @@ _generate_srv_lisp(gps_bagger
 _generate_srv_lisp(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/gps_bagger
 )
 
@@ -142,6 +169,8 @@ add_custom_target(gps_bagger_generate_messages_lisp
 add_dependencies(gps_bagger_generate_messages gps_bagger_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_dependencies(gps_bagger_generate_messages_lisp _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_dependencies(gps_bagger_generate_messages_lisp _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
@@ -156,6 +185,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gps_bagger_generate_messages_lisp)
 
 ### Section generating for lang: gennodejs
 ### Generating Messages
+_generate_msg_nodejs(gps_bagger
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/gps_bagger
+)
 
 ### Generating Services
 _generate_srv_nodejs(gps_bagger
@@ -167,7 +202,7 @@ _generate_srv_nodejs(gps_bagger
 _generate_srv_nodejs(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/gps_bagger
 )
 
@@ -183,6 +218,8 @@ add_custom_target(gps_bagger_generate_messages_nodejs
 add_dependencies(gps_bagger_generate_messages gps_bagger_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_dependencies(gps_bagger_generate_messages_nodejs _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_dependencies(gps_bagger_generate_messages_nodejs _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)
@@ -197,6 +234,12 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS gps_bagger_generate_messages_nodejs
 
 ### Section generating for lang: genpy
 ### Generating Messages
+_generate_msg_py(gps_bagger
+  "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg"
+  "${MSG_I_FLAGS}"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/gps_bagger
+)
 
 ### Generating Services
 _generate_srv_py(gps_bagger
@@ -208,7 +251,7 @@ _generate_srv_py(gps_bagger
 _generate_srv_py(gps_bagger
   "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatStatus.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/NavSatFix.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/gps_bagger
 )
 
@@ -224,6 +267,8 @@ add_custom_target(gps_bagger_generate_messages_py
 add_dependencies(gps_bagger_generate_messages gps_bagger_generate_messages_py)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/msg/Obstacles.msg" NAME_WE)
+add_dependencies(gps_bagger_generate_messages_py _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/callResponse.srv" NAME_WE)
 add_dependencies(gps_bagger_generate_messages_py _gps_bagger_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/song/Rei_WS/RobotX/GPS_bagger/src/gps_bagger/srv/WaypointService.srv" NAME_WE)

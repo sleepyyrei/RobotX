@@ -1,5 +1,5 @@
 # from util.maps import Obstacle
-from maps import Obstacle, Pose
+from util.maps import Obstacle, Pose
 import math
 import numpy as np
 import copy
@@ -188,6 +188,7 @@ class ObstacleTracker:
                 
                 self.obstacles.append(ObstacleKalman(new_obstacle))
                 self.new_obstacle_flag = True
+        return
     
 
         

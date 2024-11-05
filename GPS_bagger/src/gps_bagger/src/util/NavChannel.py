@@ -4,7 +4,8 @@ import networkx as nx
 from scipy.interpolate import interp1d
 # from Point_generator import generate_bouys_graph_weights, plot_grid_points_with_weights_and_rows
 from networkx.algorithms.shortest_paths import astar_path
-from util.maps import Pose
+from util.maps import Pose, Obstacle
+import rospy
 
 import numpy as np
 import networkx as nx
@@ -139,7 +140,6 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
         interp_red_row = lambda x: interp_blue_row(x) + offset
 
     elif (blue_row.shape[0] == 1 and red_row.shape[0] == 1) or ((blue_row.shape[0] == 0) ^ (red_row.shape[0] == 0)):
-
         # Define line from (0, 0) to the blue or red point
         if blue_row.shape[0] > 0:
             blue_point = blue_row[0]
@@ -151,8 +151,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             def interpolate_above_line(x, offset):
                 return slope * x + offset
 
-            interp_blue_row = lambda x: interpolate_above_line(x, 0)
-            interp_red_row = lambda x: interpolate_above_line(x, 15)
+            interp_blue_row = lambda x: interpolate_above_line(x, -7.5)
+            interp_red_row = lambda x: interpolate_above_line(x, 7.5)
 
         elif red_row.shape[0] > 0:
             red_point = red_row[0]
@@ -164,8 +164,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             def interpolate_below_line(x, offset):
                 return slope * x + offset
 
-            interp_blue_row = lambda x: interpolate_below_line(x, -15)
-            interp_red_row = lambda x: interpolate_below_line(x, 0)
+            interp_blue_row = lambda x: interpolate_below_line(x, -7.git5)
+            interp_red_row = lambda x: interpolate_below_line(x, 7.7)
 
 
     else:
@@ -174,8 +174,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
         interp_red_row = interp1d(red_row[:, 0], red_row[:, 1], bounds_error=False, fill_value="extrapolate")
 
     if blue_row.shape[0] == 0:
-        x_min = red_row[:, 0].min()
-        y_min = red_row[:, 1].min()
+        x_min = min(red_row[:, 0].min(),-1)
+        y_min = min(red_row[:, 1].min(),-1)
         if red_row.shape[0] == 1:
             x_max = red_row[:, 0].max() + 10
             y_max = red_row[:, 1].max() + 10
@@ -183,8 +183,8 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             x_max = red_row[:, 0].max() 
             y_max = red_row[:, 1].max()
     elif red_row.shape[0] == 0:
-        x_min = blue_row[:, 0].min()
-        y_min = blue_row[:, 1].min()
+        x_min = min(blue_row[:, 0].min(),-1)
+        y_min = min(blue_row[:, 1].min(),-1)
         if blue_row.shape[0] == 1:
             x_max = blue_row[:, 0].max() + 10
             y_max = blue_row[:, 1].max() + 10
@@ -194,9 +194,9 @@ def generate_grid_and_weights(blue_row, red_row, obs, spacing=1, exclusion_radiu
             
     else:
         # Define the x and y range for the grid
-        x_min = min(blue_row[:, 0].min(), red_row[:, 0].min())
+        x_min = min(blue_row[:, 0].min(), red_row[:, 0].min(),-1)
         x_max = max(blue_row[:, 0].max(), red_row[:, 0].max())
-        y_min = min(blue_row[:, 1].min(), red_row[:, 1].min())
+        y_min = min(blue_row[:, 1].min(), red_row[:, 1].min(),-1)
         y_max = max(blue_row[:, 1].max(), red_row[:, 1].max())
 
     # Generate x and y coordinates for the grid
@@ -448,6 +448,9 @@ def create_graph(grid_points, weights, spacing=1, tolerance=.001):
     G = nx.MultiDiGraph()
     G.add_nodes_from([tuple(point) for point in grid_points])
 
+    if not G.has_node([0,0]):
+        G.add_node((0,0))
+
     # Create a mapping from point coordinates to index
     point_to_index = {tuple(point): idx for idx, point in enumerate(grid_points)}
 
@@ -557,29 +560,31 @@ class NavChannel:
         def poses_to_array(poses):
             array = np.empty((0, 2))
             for pose in poses:
-                if not isinstance(pose, Pose) or pose.hasXYCoords():
+                if not isinstance(pose, Pose) or not pose.hasXYCoords():
                     continue
-                array.append([pose.x, pose.y])
+                array = np.append(array, [[pose.x, pose.y]], axis=0)  # Note the reassignment and double brackets
             return array
         
         red_array = poses_to_array(red_bouys)
         blue_array = poses_to_array(blue_bouys)
         obs_array = poses_to_array(obstacles)
+        start_bouy_coords, end_bouy_coords = None, None
         if isinstance(start_bouy, Pose):
             start_bouy_coords = [start_bouy.x, start_bouy.y]
         if isinstance(end_bouy, Pose):
-            end_bouy_coords = [end_bouy.x, start_bouy.y]
+            end_bouy_coords = [end_bouy.x, end_bouy.y]
 
         gridpoints, weights = generate_grid_and_weights(blue_row=blue_array, red_row=red_array, obs=obs_array, 
                                                spacing=self.grid_spacing, exclusion_radius=self.exclusion_radius, 
                                                weight_function=self.scaled_inverse_distance_weight)
+        rospy.loginfo(gridpoints)
         graph = create_graph(grid_points=gridpoints, weights=weights, spacing=self.grid_spacing, tolerance=.1)
         if start_bouy_coords is not None:
             endpoint = start_bouy_coords
         elif end_bouy_coords is not None:
             endpoint = end_bouy_coords
         else:
-            _ , endpoint - find_start_end_points(grid_points=gridpoints, blue_row=blue_array, red_row=red_array)
+            _, endpoint = find_start_end_points(grid_points=gridpoints, blue_row=blue_array, red_row=red_array)
         
         startpoint = np.array([0,0])
 
@@ -588,8 +593,10 @@ class NavChannel:
 
         try:
             path = astar_path(graph, start_node, end_node, weight='weight', heuristic=heuristic)
+            # plot_graph_with_obstacles(gridpoints, graph, blue_array, red_array, obs_array, weights, path, startpoint, endpoint)
         except nx.NetworkXNoPath:
             path = []
+            # plot_graph_with_obstacles(gridpoints, graph, blue_array, red_array, obs_array, weights, path, startpoint, endpoint)
 
         return path
 

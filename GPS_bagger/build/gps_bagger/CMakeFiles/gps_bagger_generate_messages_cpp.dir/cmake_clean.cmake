@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "/home/song/Rei_WS/RobotX/GPS_bagger/devel/include/gps_bagger/Obstacles.h"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/include/gps_bagger/WaypointService.h"
   "/home/song/Rei_WS/RobotX/GPS_bagger/devel/include/gps_bagger/callResponse.h"
   "CMakeFiles/gps_bagger_generate_messages_cpp"
