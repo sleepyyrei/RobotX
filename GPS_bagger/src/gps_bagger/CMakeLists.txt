@@ -29,6 +29,8 @@ catkin_install_python(PROGRAMS
   scripts/basicPath.py
   scripts/bagger.py
   scripts/nav_channel.py
+  scripts/hbt.py
+  scripts/pseudo.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 catkin_python_setup()
